@@ -15,16 +15,16 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      # 1. Gera os gráficos de animação
+      # 1. Gera os gráficos de animação com os nomes exatos do seu README
       - name: Generate SVG
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/galaga-contribution-graph.svg
-            dist/galaga-contribution-graph-dark.svg?palette=github-dark
+            dist/pacman-contribution-graph.svg
+            dist/pacman-contribution-graph-dark.svg?palette=github-dark
 
-      # 2. Publica os arquivos na branch pacman-output usando comandos nativos do Git
+      # 2. Publica os arquivos na branch pacman-output
       - name: Deploy to pacman-output
         uses: crazy-max/ghaction-github-pages@v4
         with:
