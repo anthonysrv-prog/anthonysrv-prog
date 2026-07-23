@@ -1,0 +1,28 @@
+name: Generate Pacman Contribution Graph
+
+on:
+  # Roda automaticamente a cada 24 horas
+  schedule:
+    - cron: "0 0 * * *"
+  # Permite rodar manualmente na aba Actions
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Gera o gráfico no estilo galaga/pacman
+      - uses: Snuffy2/snuffy2@master
+        id: pacman-graph
+        with:
+          github_user_name: ${{ github.repository_owner }}
+
+      # Envia os arquivos gerados para a branch "pacman-output"
+      - uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: pacman-output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
