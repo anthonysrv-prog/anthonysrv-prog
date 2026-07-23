@@ -15,11 +15,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      # 1. Baixa o repositório
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 2. Gera os gráficos de animação
+      # 1. Gera os gráficos de animação
       - name: Generate SVG
         uses: Platane/snk/svg-only@v3
         with:
@@ -28,10 +24,11 @@ jobs:
             dist/galaga-contribution-graph.svg
             dist/galaga-contribution-graph-dark.svg?palette=github-dark
 
-      # 3. Envia os arquivos diretamente para a branch pacman-output
-      - name: Push to pacman-output branch
-        uses: peaceiris/actions-gh-pages@v3
+      # 2. Publica os arquivos na branch pacman-output usando comandos nativos do Git
+      - name: Deploy to pacman-output
+        uses: crazy-max/ghaction-github-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: pacman-output
+          target_branch: pacman-output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
