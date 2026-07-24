@@ -20,12 +20,16 @@ jobs:
         uses: jonas-schmedtmann/github-readme-pacman@main
         with:
           github_user_name: ${{ github.repository_owner }}
+          # Você pode customizar as cores aqui se quiser:
+          # pacman_color: "#f9d71c" # Amarelo clássico
+          # ghost_color: "#ff0000"   # Vermelho
 
       # 2. Publica os arquivos gerados na branch pacman-output
       - name: Deploy to pacman-output
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: pacman-output
+          # A nova action gera os arquivos direto na raiz, então build_dir é '.'
           build_dir: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
