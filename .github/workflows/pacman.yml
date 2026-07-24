@@ -1,30 +1,69 @@
-name: Generate Contribution Pac-Man Animation
+name: Generate Profile Metrics & Pacman
 
 on:
   schedule:
-    # Executa a cada 24 horas (meia-noite UTC)
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    # Executa a cada 12 horas
+    - cron: "0 */12 * * *"
+  workflow_dispatch: # Permite executar manualmente
 
 jobs:
-  generate:
-    permissions:
-      contents: write
+  generate-metrics:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-
+    timeout-minutes: 10
     steps:
-      # 1. Gera os arquivos SVG da animação do Pac-Man
-      - name: Generate Pac-Man SVG
-        uses: abozanona/pacman-contribution-graph@main
+      # 1. Gera os gráficos do Pac-man
+      - name: Generate Pacman Graph
+        uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/pacman/pacman-contribution-graph.svg
+            dist/pacman/pacman-contribution-graph-dark.svg?palette=github-dark
 
-      # 2. Publica os arquivos gerados na branch pacman-output
-      - name: Deploy to pacman-output
+      # 2. Publica o Pacman na branch pacman-output
+      - name: Push Pacman to output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: pacman-output
-          build_dir: dist
+          build_dir: dist/pacman
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 3. Baixa as imagens das estatísticas para os endpoints locais
+      - name: Fetch Profile Stats & Graphs
+        run: |
+          mkdir -p dist/stats dist/languages dist/activity
+          
+          # Stats
+          curl -s "https://github-readme-stats.vercel.app/api?username=${{ github.repository_owner }}&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=react&locale=en&hide_border=false" -o dist/stats/stats.svg
+          
+          # Languages
+          curl -s "https://github-readme-stats.vercel.app/api/top-langs/?username=${{ github.repository_owner }}&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=react&hide_border=false" -o dist/languages/languages.svg
+          
+          # Activity Graph
+          curl -s "https://github-readme-activity-graph.vercel.app/graph?username=${{ github.repository_owner }}&radius=16&theme=react&area=true" -o dist/activity/activity-graph.svg
+
+      # 4. Publica os gráficos de estatísticas nas respectivas branches
+      - name: Push Stats Branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: stats-output
+          build_dir: dist/stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Languages Branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: languages-output
+          build_dir: dist/languages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Activity Graph Branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: activity-graph-output
+          build_dir: dist/activity
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
