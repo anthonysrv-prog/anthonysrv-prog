@@ -62,7 +62,14 @@
 ### 🔥 Minhas Estatísticas
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/anthonysrv-prog/anthonysrv-prog/languages-output/languages.svg?locale=pt-br&hide_title=false&layout=compact&card_width=320&langs_count=3&theme=react&hide_border=false" height="151" alt="Linguagens mais usadas" />
-  <img src="https://raw.githubusercontent.com/anthonysrv-prog/anthonysrv-prog/stats-output/stats.svg?hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=react&locale=en&hide_border=false" height="250" alt="Estatísticas do GitHub" />
-  <img src="https://streak-stats.demolab.com?user=anthonysrv-prog&locale=en&mode=daily&theme=react&hide_border=false&border_radius=5" height="220" alt="Sequência de Commits" />
+  <!-- Linguagens Mais Usadas -->
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=anthonysrv-prog&layout=compact&langs_count=5&theme=react&hide_border=false" height="151" alt="Linguagens mais usadas" />
+  
+  <!-- Estatísticas Gerais -->
+  <img src="https://github-readme-stats.vercel.app/api?username=anthonysrv-prog&show_icons=true&theme=react&include_all_commits=true&count_private=true&hide_border=false" height="151" alt="Estatísticas do GitHub" />
+  
+  <br /><br />
+
+  <!-- Sequência de Commits (Streak) -->
+  <img src="https://streak-stats.demolab.com?user=anthonysrv-prog&locale=en&mode=daily&theme=react&hide_border=false&border_radius=5" height="180" alt="Sequência de Commits" />
 </div>
